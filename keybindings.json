@@ -108,8 +108,27 @@
       "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
       "when": "inFilesPicker && inQuickOpen"
     },
+    {
+      "key": "ctrl+numpad1",
+      "command": "workbench.action.terminal.focus",
+      "when": "!terminalFocus"
+    },
   
-  
+    {
+      "key": "ctrl+numpad1",
+      "command": "workbench.action.focusActiveEditorGroup",
+      "when": "terminalFocus"
+    },
+    {
+      "key": "ctrl+numpad4",
+      "command": "workbench.view.scm",
+      "when": "workbench.scm.active"
+    },
+    {
+      "key": "ctrl+shift+g",
+      "command": "-workbench.view.scm",
+      "when": "workbench.scm.active"
+    },
   
   ]
   
