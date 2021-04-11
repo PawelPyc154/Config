@@ -1,0 +1,237 @@
+{
+    "function component": {
+      "prefix": "fc",
+      "body": [
+        "import React from 'react'",
+        "",
+        "",
+        "const ${1:${TM_FILENAME_BASE}} = ($3)=> {",
+        "  return ( ${2:<div>${TM_FILENAME_BASE}</div> })",
+        "}",
+        " ",
+        "export {$1}"
+      ],
+      "description": "function component"
+    },
+    "Class component": {
+      "prefix": "cc",
+      "body": [
+        "import React from 'react';",
+        "",
+        "export interface $1Props {",
+        "  $2",
+        "}",
+        " ",
+        "export interface $1State {",
+        "  $3",
+        "}",
+        " ",
+        "class ${1:${TM_FILENAME_BASE}} extends React.Component<$1Props, $1State> {",
+        "  constructor(props: $1Props) {",
+        "    super(props);",
+        "    this.state = { $4: $5 };",
+        "  }",
+        "  render() { ",
+        "    return ( $6 );",
+        "  }",
+        "}",
+        " ",
+        "export default $1 ; "
+      ],
+      "description": "Class component"
+    },
+    "useEffect": {
+      "prefix": "ue",
+      "body": ["useEffect(() => {", "  $1", "}, [$2]);"],
+      "description": "useEffect"
+    },
+    "useEffect return": {
+      "prefix": "uer",
+      "body": [
+        "useEffect(() => {",
+        "  $1",
+        "  return () => {",
+        "      $2;",
+        "  }",
+        "}, [$3]);"
+      ],
+      "description": "useEffect return"
+    },
+    "useState": {
+      "prefix": "us",
+      "body": [
+        "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState$3($2);"
+      ],
+      "description": "useState"
+    },
+    "useRef": {
+      "prefix": "ur",
+      "body": ["const ${1:ref} = useRef<${3:any}>(${2:null})    "],
+      "description": "useRef"
+    },
+    "useDispatch": {
+      "prefix": "useDispatch",
+      "body": [
+        "import { useDispatch } from 'react-redux';",
+        "const dispatch = useDispatch();"
+      ],
+      "description": "useDispatch"
+    },
+    "useSelector": {
+      "prefix": "useSelector",
+      "body": [
+        "const $3 = useSelector((state: ${2:AppState}) => state.${1:Reducer});"
+      ],
+      "description": "useSelector"
+    },
+    "useMemo": {
+      "prefix": "useMemo",
+      "body": ["useMemo(() => ${1:function), ${2:input})"],
+      "description": "useMemo"
+    },
+    "useCallback": {
+      "prefix": "useCallback",
+      "body": [
+        "useCallback(",
+        "  () => {",
+        "    ${1:callback}",
+        "  },",
+        "  [ ${2:input}],",
+        ")"
+      ],
+      "description": "useCallback"
+    },
+    "useContext": {
+      "prefix": "useContext",
+      "body": ["const ${2:context} = useContext( ${1:contextValue})"],
+      "description": "useContext"
+    },
+    "useReducer": {
+      "prefix": "useReducer",
+      "body": [
+        "const [state, dispatch] = useReducer(${1:reducer}, ${2:initialState}, ${3:init})"
+      ],
+      "description": "useReducer"
+    },
+    "if": {
+      "prefix": "if",
+      "body": ["if ($1) {", "$2", "} "],
+      "description": "if"
+    },
+    "for": {
+      "prefix": "for",
+      "body": ["for (const ${1:iterator} of ${2:object}) {", "  $3", "}"],
+      "description": "for"
+    },
+    "trycatch": {
+      "prefix": "trycatch",
+      "body": ["try {", "   $1   ", "} catch (err) {", "  $2", "}"],
+      "description": "trycatch"
+    },
+    "axios": {
+      "prefix": "axios",
+      "body": [
+        "import axios from 'axios';",
+        "const ${3:res} = await axios.${1|get,post,put,delete|}(\"${2:url}\")"
+      ],
+      "description": "axios"
+    },
+    "styled": {
+      "prefix": "styled",
+      "body": ["const $1 = styled$2`", "$3", "`", ""],
+      "description": "styled"
+    },
+    "function": {
+      "prefix": "af",
+      "body": ["const $1 = ($2) => $3"],
+      "description": "function"
+    },
+    "reduxIndex": {
+      "prefix": "reduxIndex",
+      "body": [
+        "const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;",
+        "const store = createStore(allReducers, composeEnhancers(applyMiddleware(thunk)));",
+        "<Provider store={store}>",
+        "</Provider>"
+      ],
+      "description": "reduxIndex"
+    },
+    "reduxDevTool": {
+      "prefix": "reduxDevTool",
+      "body": [
+        "import { compose } from 'redux';",
+        "declare global {",
+        "interface Window {",
+        "__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;",
+        "}",
+        "}"
+      ],
+      "description": "reduxDevTool"
+    },
+    "reduxAllReducers": {
+      "prefix": "reduxAllReducers",
+      "body": [
+        "import { combineReducers } from 'redux';",
+        "import BoardReducer from './board/reducer';",
+        "const allReducers = combineReducers({",
+        "BoardReducer,",
+        "});",
+        "export type AppState = ReturnType<typeof allReducers>;",
+        "export default allReducers;"
+      ],
+      "description": "reduxAllReducers"
+    },
+    "reduxReducer": {
+      "prefix": "reduxReducer",
+      "body": [
+        "import { Board } from './models';",
+        "import * as BoardActions from './actions';",
+        "const initialState: Board = {",
+        "};",
+        "const BoardReducer = (state = initialState, action: BoardActions.BoardActionTypes): Board => {",
+        "switch (action.type) {",
+        "case BoardActions.SET_DATA:",
+        "return action.payload;",
+        "default:",
+        "return state;",
+        "}",
+        "};",
+        "export default BoardReducer;"
+      ],
+      "description": "reduxReducer"
+    },
+    "reduxAction": {
+      "prefix": "reduxAction",
+      "body": [
+        "import { Board } from './models';",
+        "export const SET_DATA = '[BOARD] SET_DATA';",
+        "export interface SetData {",
+        "type: typeof SET_DATA;",
+        "payload: Board;",
+        "}",
+        "export const setData = (data: Board): SetData => ({",
+        "type: SET_DATA,",
+        "payload: data,",
+        "});",
+        "export type BoardActionTypes = SetData;"
+      ],
+      "description": "reduxAction"
+    },
+    "reduxActionAsync": {
+      "prefix": "reduxActionAsync",
+      "body": [
+        "import { ThunkDispatch } from 'redux-thunk';",
+        "import * as BoardActions from './actions';",
+        "export default () => async (dispatch: ThunkDispatch<{}, {}, BoardActions.BoardActionTypes>) => {",
+        "dispatch(BoardActions.setData(data));",
+        "};"
+      ],
+      "description": "reduxActionAsync"
+    },
+    "theme": {
+      "prefix": "theme",
+      "body": ["${({theme})=>theme.$1}"],
+      "description": "theme"
+    }
+  }
+  

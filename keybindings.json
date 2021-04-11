@@ -1,0 +1,115 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+      "key": "ctrl+oem_1",
+      "command": "extension.fixImport"
+    },
+    {
+      "key": "ctrl+oem_1",
+      "command": "editor.action.organizeImports",
+      "when": "editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
+    },
+    {
+      "key": "shift+alt+o",
+      "command": "-editor.action.organizeImports",
+      "when": "editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
+    },
+    {
+      "key": "ctrl+f1",
+      "command": "workbench.action.terminal.focus"
+    },
+    {
+      "key": "ctrl+s",
+      "command": "workbench.action.files.saveAll"
+    },
+    {
+      "key": "ctrl+k s",
+      "command": "-workbench.action.files.saveAll"
+    },
+    {
+      "key": "alt+d",
+      "command": "editor.action.addSelectionToNextFindMatch",
+      "when": "editorFocus"
+    },
+    {
+      "key": "ctrl+d",
+      "command": "-editor.action.addSelectionToNextFindMatch",
+      "when": "editorFocus"
+    },
+    {
+      "key": "ctrl+d",
+      "command": "editor.action.duplicateSelection"
+    },
+    {
+      "key": "ctrl+numpad0",
+      "command": "view-activitybar.focus"
+    },
+    {
+      "key": "numpad0",
+      "command": "view-explorer.focus"
+    },
+    {
+      "key": "numpad1",
+      "command": "workbench.view.explorer",
+      "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+      "key": "ctrl+shift+e",
+      "command": "-workbench.view.explorer",
+      "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+      "key": "numpad7",
+      "command": "pin-up.add-pin-current"
+    },
+    {
+      "key": "ctrl+alt+p",
+      "command": "-pin-up.add-pin-current"
+    },
+    {
+      "key": "numpad4",
+      "command": "extension.toggleFiles"
+    },
+    {
+      "key": "numpad8",
+      "command": "workbench.files.action.collapseExplorerFolders"
+    },
+    {
+      "key": "numpad9",
+      "command": "workbench.action.closeAllGroups"
+    },
+    {
+      "key": "ctrl+k ctrl+shift+w",
+      "command": "-workbench.action.closeAllGroups"
+    },
+    {
+      "key": "numpad2",
+      "command": "workbench.action.gotoSymbol"
+    },
+    {
+      "key": "ctrl+shift+o",
+      "command": "-workbench.action.gotoSymbol"
+    },
+    {
+      "key": "numpad3",
+      "command": "workbench.action.quickOpen"
+    },
+    {
+      "key": "ctrl+p",
+      "command": "-workbench.action.quickOpen"
+    },
+    {
+      "key": "numpad2",
+      "command": "workbench.action.quickOpenNavigateNextInFilePicker",
+      "when": "inFilesPicker && inQuickOpen"
+    },
+    {
+      "key": "ctrl+p",
+      "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
+      "when": "inFilesPicker && inQuickOpen"
+    },
+  
+  
+  
+  ]
+  
