@@ -1,0 +1,27 @@
+type IsTuple<T extends ReadonlyArray<any>> = number extends T["length"]
+  ? false
+  : true;
+type TupleKey<T extends ReadonlyArray<any>> = Exclude<keyof T, keyof any[]>;
+type ArrayKey = number;
+type PathImpl<K extends string | number, V, W> = V extends Primitive
+  ? V extends W
+    ? `${K}`
+    : never
+  : V extends W
+  ? `${K}`
+  : never | `${K}.${FieldPathCustom<V, W>}`;
+
+type FieldPathCustom<T, W> = T extends ReadonlyArray<infer V>
+  ? IsTuple<T> extends true
+    ? {
+        [K in TupleKey<T>]-?: PathImpl<K & string, T[K], W>;
+      }[TupleKey<T>]
+    : PathImpl<ArrayKey, V, W>
+  : {
+      [K in keyof T]-?: PathImpl<K & string, T[K], W>;
+    }[keyof T];
+
+interface ControlProps<TFieldValues extends FieldValues = FieldValues> {
+  control: Control<TFieldValues>;
+  name: FieldPathCustom<TFieldValues, string>;
+}
