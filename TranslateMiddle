@@ -1,0 +1,8 @@
+
+// type TranslateSuffix<TPrefix extends string, TModules extends keyof Modules> = {
+//   [P in Modules[TModules]]: P extends `${TPrefix}${infer Y}` ? Y : never
+// }[Modules[TModules]]
+
+// type TranslateMiddle<TPrefix extends string, TModules extends keyof Modules> = {
+//   [P in Modules[TModules]]: P extends `${TPrefix}${infer Y}.${string}` ? Y : never
+// }[Modules[TModules]]
