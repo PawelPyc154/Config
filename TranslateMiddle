@@ -6,3 +6,50 @@
 // type TranslateMiddle<TPrefix extends string, TModules extends keyof Modules> = {
 //   [P in Modules[TModules]]: P extends `${TPrefix}${infer Y}.${string}` ? Y : never
 // }[Modules[TModules]]
+
+
+import { StringMap, TOptions } from "i18next";
+import {
+  DefaultNamespace,
+  Namespace,
+  TFuncKey,
+  useTranslation as useTranslationBase,
+  UseTranslationOptions,
+} from "react-i18next";
+
+// export function useTranslation(
+//   ns?: N,
+//   options?: UseTranslationOptions,
+// ): UseTranslationResponse<N>;
+
+const useTranslation2 = <
+  N extends Namespace = DefaultNamespace,
+  TPrefix extends string = ""
+>(
+  ns?: N,
+  options?: UseTranslationOptions & { prefix: TPrefix }
+) => {
+  const { t, ...rest } = useTranslationBase(ns, options);
+
+  return {
+    ...rest,
+    t: <
+      TKeys extends TFuncKey<N>,
+      TInterpolationMap extends object = StringMap
+    >(
+      key: TKeys extends `${TPrefix}${infer Y}` ? Y : never,
+      optionsT?: TOptions<TInterpolationMap> | string
+    ) => t(`${options?.prefix}${key}` as TKeys, optionsT),
+  };
+};
+
+export { useTranslation2 };
+
+// type
+// type Testy = {
+//   test:
+// }
+
+// type TTT = TFuncKey<"translation">;
+// type TranslateSuffix<TPrefix extends string, TModules extends keyof Modules> =
+//   Modules[TModules] extends `${TPrefix}${infer Y}` ? Y : never;
