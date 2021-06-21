@@ -1,0 +1,212 @@
+import React, { memo, useMemo, useRef, useState } from "react";
+import Draggable from "react-draggable";
+type Position = {
+  offsetX: number;
+  offsetY: number;
+  id: number;
+};
+
+const useLine = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [positions, setPositions] = useState<Position[]>([
+    {
+      offsetX: 20,
+      offsetY: 20,
+      id: 1,
+    },
+  ]);
+  const [positions2, setPositions2] = useState<Position[]>([
+    {
+      offsetX: 20,
+      offsetY: 20,
+      id: 1,
+    },
+  ]);
+
+  const line = positions
+    .reduce((prev, curr, index) => {
+      return [...prev, [prev[index - 1]?.[1], curr]];
+    }, [] as Position[][])
+    .filter((item) => item[0]);
+
+  const betweenDiv = line.map(([start, end]) => ({
+    offsetX: (start.offsetX + end.offsetX) / 2,
+    offsetY: (start.offsetY + end.offsetY) / 2,
+    startId: start.id,
+  }));
+
+  const addPositionBetween = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    startId: number,
+    offsetX: number,
+    offsetY: number
+  ) => {
+    e.stopPropagation();
+    setPositions((prev) => {
+      const arrayPrev = [...prev];
+      arrayPrev.splice(prev.findIndex((item) => item.id === startId) + 1, 0, {
+        offsetX: offsetX,
+        offsetY: offsetY,
+        id: Date.now(),
+      });
+      return arrayPrev;
+    });
+
+    setPositions2((prev) => {
+      const arrayPrev = [...prev];
+      arrayPrev.splice(prev.findIndex((item) => item.id === startId) + 1, 0, {
+        offsetX: offsetX,
+        offsetY: offsetY,
+        id: Date.now(),
+      });
+      return arrayPrev;
+    });
+  };
+
+  const setPosition = (id: number, x: number, y: number) => {
+    console.log("setPosition", x, y);
+    setPositions((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, offsetX: x, offsetY: y } : item
+      )
+    );
+  };
+  const setPosition2 = (id: number, x: number, y: number) => {
+    setPositions2((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, offsetX: x, offsetY: y } : item
+      )
+    );
+  };
+
+  return {
+    getContainerProps: {
+      style: {
+        position: "relative",
+      },
+      ref: containerRef,
+
+      onClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+        setPositions((prev) => [
+          ...prev,
+          {
+            // ...mousePosition,
+            offsetX: e.nativeEvent.offsetX,
+            offsetY: e.nativeEvent.offsetY,
+            id: Date.now(),
+          },
+        ]);
+        setPositions2((prev) => [
+          ...prev,
+          {
+            // ...mousePosition,
+            offsetX: e.nativeEvent.offsetX,
+            offsetY: e.nativeEvent.offsetY,
+            id: Date.now(),
+          },
+        ]);
+      },
+    },
+
+    render() {
+      return (
+        <>
+          {positions2.map((item) => (
+            <DrawBox
+              setPosition={setPosition}
+              setPosition2={setPosition2}
+              key={item.offsetX + item.offsetY + item.id}
+              {...item}
+            ></DrawBox>
+          ))}
+
+          {betweenDiv.map(({ offsetX, offsetY, startId }) => (
+            <div
+              // draggable
+              key={offsetX + offsetY}
+              style={{
+                position: "absolute",
+                top: offsetY + "px",
+                left: offsetX + "px",
+                background: "blue",
+                height: "20px",
+                width: "20px",
+                borderRadius: "10px",
+                // transform: "translate(-50%, -50%)",
+              }}
+              onClick={(e) => addPositionBetween(e, startId, offsetX, offsetY)}
+            ></div>
+          ))}
+          <svg style={{ width: "100%", height: "100%" }}>
+            {line.map(([start, end]) => (
+              <line
+                key={start.offsetX + start.offsetY + end.offsetX + end.offsetY}
+                x1={start.offsetX + 10}
+                y1={start.offsetY + 10}
+                x2={end.offsetX + 10}
+                y2={end.offsetY + 10}
+                strokeWidth="2"
+                stroke="black"
+              />
+            ))}
+          </svg>
+        </>
+      );
+    },
+  };
+};
+interface DrawBoxProps {
+  offsetX: number;
+  offsetY: number;
+  id: number;
+  setPosition: (id: number, x: number, y: number) => void;
+  setPosition2: (id: number, x: number, y: number) => void;
+}
+const DrawBox = memo(
+  ({ offsetX, offsetY, id, setPosition, setPosition2 }: DrawBoxProps) => {
+    const ref = useRef<any>(null);
+
+    return (
+      <Draggable
+        nodeRef={ref}
+        position={{ x: offsetX, y: offsetY }}
+        onDrag={(event, { x, y }) => setPosition(id, x, y)}
+        onStop={(event, { x, y }) => setPosition2(id, x, y)}
+      >
+        <div
+          ref={ref}
+          style={{
+            position: "absolute",
+            background: "white ",
+            height: "20px",
+            width: "20px",
+            transform: "translate(-50% ,-50%)",
+          }}
+        ></div>
+      </Draggable>
+    );
+  }
+);
+
+function App() {
+  const { getContainerProps, render } = useLine();
+
+  return (
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <div
+        {...getContainerProps}
+        style={{
+          position: "relative",
+          width: "500px",
+          height: "500px",
+          background: "red",
+          margin: "100px",
+        }}
+      >
+        {render()}
+      </div>
+    </div>
+  );
+}
+
+export default App;
