@@ -1,11 +1,8 @@
 import { execSync } from "child_process";
-//
 import "colors";
 import { removeModels } from "./removeModels";
 
-const modelsPath = "models";
-
-const test = async () => {
+const addModels = async (modelsPath: string) => {
   execSync(`rm -rf ${modelsPath}/*`);
   execSync(
     "sc generate -i https://api.income.training/swagger/v1/swagger.json -l typescript-angular -o ../swaggerModels"
@@ -24,4 +21,4 @@ const test = async () => {
   execSync("rm -r ../swaggerModels");
 };
 
-test();
+addModels("models");

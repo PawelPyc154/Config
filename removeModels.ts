@@ -34,7 +34,7 @@ export const removeModels = async (patterns: RegExp[]) => {
   await fsPromises.unlink(resolve(`${dirPath}models.ts`));
   const fileNames = await fsPromises.readdir(resolve(dirPath));
   const array = await Promise.all(
-    await fileNames.map(async (fileName) => {
+    fileNames.map(async (fileName) => {
       return {
         fileName: fileName,
         fileContent: await fsPromises.readFile(dirPath + fileName, "utf8"),
