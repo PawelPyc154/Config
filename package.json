@@ -8,12 +8,18 @@
   "dependencies": {
     "@types/node": "^16.10.3",
     "colors": "^1.4.0",
+    "nodemon": "^2.0.13",
     "swagger-nodegen-cli": "^3.0.24",
     "ts-node": "^10.2.1",
+    "ts-node-dev": "^1.1.8",
+    "tsc": "^2.0.3",
+    "tsconfig-paths": "^3.11.0",
     "typescript": "^4.4.3"
   },
   "scripts": {
-    "newModels": "ts-node --project tsconfig.json removeModelsConfig.ts"
+    "build": "tsc",
+    "newModels": "ts-node-dev --project tsconfig.json removeModelsConfig.ts",
+    "start": "nodemon newModels"
   },
   "devDependencies": {
     "tslib": "^2.3.1"
