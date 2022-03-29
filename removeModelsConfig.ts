@@ -5,7 +5,7 @@ import { removeModels } from "./removeModels";
 const addModels = async (modelsPath: string) => {
   execSync(`rm -rf ${modelsPath}/*`);
   execSync(
-    "sc generate -i https://api.income.training/swagger/v1/swagger.json -l typescript-angular -o ../swaggerModels"
+    "sc generate -i https://test.training/swagger/v1/swagger.json -l typescript-angular -o ../swaggerModels"
   );
 
   await removeModels([
